@@ -1,0 +1,16 @@
+.loading{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    color: white;
+    margin-left: 3rem;
+    font-size: 2rem;
+}
+
+.title{
+    color: white;
+}
