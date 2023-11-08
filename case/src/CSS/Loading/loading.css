@@ -3,14 +3,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .icon {
-    color: white;
+    color: black;
     margin-left: 3rem;
     font-size: 2rem;
 }
 
 .title{
-    color: white;
+    color: black;
 }

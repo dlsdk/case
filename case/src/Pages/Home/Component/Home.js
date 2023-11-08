@@ -1,25 +1,23 @@
-import React, { useState } from 'react';
+/*import React, { useState } from 'react';
 import { Button, Table } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { InfoCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
-
+import 'CSS/Home/index.css'
 
 const data = [
     {
         key: '1',
         id: 1,
-        title: 'Sample Title 1',
-        content: 'Sample Content 1',
-        author: 'John Doe',
-        published_date: '2023-01-15',
+        title: 'ABC',
+        content: 'sdfsdfasdfdsfasd',
+        author: 'Dilşo',
     },
     {
         key: '2',
         id: 2,
-        title: 'Sample Title 2',
-        content: 'Sample Content 2',
-        author: 'Jane Smith',
-        published_date: '2023-02-20',
+        title: 'DEF',
+        content: 'DFSDFSDFD',
+        author: 'Hazel',
     },
 ];
 
@@ -38,23 +36,19 @@ function Home() {
             key: 'author',
         },
         {
-            title: 'Detail',
-            key: 'detail',
+            key: 'actions',
+            width: '8%',
             render: (data) => (
-                <NavLink to={`/article/${data.id}`} state={{ data }}>
-                    <InfoCircleOutlined />
-                </NavLink>
-            ),
-        },
-        {
-            title: 'Delete',
-            key: 'delete',
-            render: (data) => (
-                <Button
-                    type="danger"
-                    icon={<DeleteOutlined />}
-                    onClick={() => handleDeleteItem(data.key)}
-                />
+                <div>
+                    <NavLink to={`/article/${data.id}`} state={{ data }}>
+                        <InfoCircleOutlined style={{ marginRight: 8 }} />
+                    </NavLink>
+                    <Button
+                        type="danger"
+                        icon={<DeleteOutlined />}
+                        onClick={() => handleDeleteItem(data.key)}
+                    />
+                </div>
             ),
         },
     ];
@@ -73,21 +67,58 @@ function Home() {
     };
 
     return (
-        <>
-            <Table
-                columns={columns}
-                dataSource={data}
-                rowSelection={{
-                    type: 'checkbox',
-                    selectedRowKeys,
-                    onChange: onSelectChange,
-                }}
+        <div className="home" >
+            <Table className="table-container"
+                   columns={columns}
+                   dataSource={data}
+                   rowSelection={{
+                       type: 'checkbox',
+                       selectedRowKeys,
+                       onChange: onSelectChange,
+                   }}
             />
+            <div className="button">
             {selectedRowKeys.length > 0 && (
                 <Button onClick={handleDeleteSelectedItems}>Delete Selected Items</Button>
             )}
+        </div>
+        </div>
+    );
+
+}
+
+export default Home;*/
+
+import React from "react";
+import { Row, Col, Card, Radio, Table, Upload, message } from "antd";
+import { columns, tableData } from "utils/TableData";
+const { Dragger } = Upload;
+export default function Tables() {
+    const onChange = (e) => {
+        console.log(`radio checked:${e.target.value}`);
+    };
+
+    return (
+        <>
+            <div className="tabled">
+                <Row gutter={[24, 0]}>
+                    <Col xs={24}>
+                        <Card
+                            bordered={false}
+                            className="criclebox tablespace mb-24"
+                            title="Dashboard"
+                        >
+                            <div className="table-responsive">
+                                <Table
+                                    columns={columns}
+                                    dataSource={tableData}
+                                    className="ant-border-space"
+                                />
+                            </div>
+                        </Card>
+                    </Col>
+                </Row>
+            </div>
         </>
     );
 }
-
-export default Home;
