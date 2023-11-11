@@ -5,10 +5,13 @@ import HomeLayout from 'Pages/Home';
 import Home from "Pages/Home/Component/Home";
 import AuthLayout from "Pages/Auth";
 import Article from 'Pages/Article';
+import Profile from "../Pages/Profile";
+import PrivateRoute from "./PrivateRoute";
 
 const routeList = [
     {
         path:'/',
+        auth: 'true',
         element: <HomeLayout/>,
         children: [
             {
@@ -16,9 +19,13 @@ const routeList = [
                 element: <Home/>
             },
             {
-                path: 'article/:id',
+                path: 'article/:author',
                 element: <Article/>
-            }
+            },
+            {
+                path: 'profile',
+                element: <Profile/>
+            },
         ]
     },
     {
@@ -36,5 +43,14 @@ const routeList = [
         ]
     },
 ]
+const authMap = routes => routes.map(route => {
+    if (route.auth){
+        route.element = <PrivateRoute>{route.element}</PrivateRoute>
+    }
+    if(route.children){
+        route.children = authMap(route.children)
+    }
+    return route;
+})
 
-export default routeList;
+export default authMap(routeList);
