@@ -4,13 +4,8 @@ import { columns, tableData } from "utils/TableData";
 import {useSelector} from "react-redux";
 import {selectArticle} from 'Redux/Selectors';
 
-
 export default function Tables() {
     const articles = useSelector(selectArticle);
-    const onChange = (e) => {
-        console.log(`radio checked:${e.target.value}`);
-    };
-
 
     return (
         <>
@@ -22,10 +17,11 @@ export default function Tables() {
                                     columns={columns}
                                     dataSource={articles}
                                     pagination={{
-                                        defaultPageSize: 10,
+                                        defaultPageSize: 8,
                                         showSizeChanger: false,
                                     }}
-                                    className="ant-border-space"
+                                    className="ant-border-space custom-table"
+                                    style={{fontSize:'10px'}}
                                 />
                         </Card>
                     </Col>

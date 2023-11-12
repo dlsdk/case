@@ -34,7 +34,7 @@ const Register = () => {
   };
 
   return (
-    <Row gutter={[8, 0]} justify="space-evenly" style={{ alignItems: 'center' , marginTop:'5%'}}>
+    <Row gutter={[8, 0]} justify="space-evenly" style={{ alignItems: 'center' , marginTop:'2%'}}>
          <Col xs={24} md={12} lg={10} xl={8} className="mb-24" style={{marginLeft: '5%'}}>
             <img src={register} alt="" style={{ width: '100%'}}  />
           </Col>
@@ -56,7 +56,7 @@ const Register = () => {
 
           <Form.Item
             label="Full Name"
-            name="full_name"
+            name="fullName"
             rules={[
               {
                 required: true,
@@ -78,6 +78,33 @@ const Register = () => {
             ]}
           >
             <Input type="text" placeholder="Username" />
+          </Form.Item>
+          <Form.Item
+            label="Location"
+            name="location"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your location!',
+              },
+            ]}
+          >
+            <Input type="text" placeholder="Location" />
+          </Form.Item>
+          <Form.Item
+            label="Mobile"
+            name="mobile"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your mobile!',
+              },
+              { pattern: /^\d{10}$/,
+                message: 'Please enter a valid 10-digit mobile number'
+              }
+            ]}
+          >
+            <Input type="text" placeholder="Location" />
           </Form.Item>
 
           <Form.Item

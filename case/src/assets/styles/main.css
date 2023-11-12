@@ -14,7 +14,6 @@ body {
     font-family: open sans, Helvetica, Arial, sans-serif;
     max-height: 100vh;
 }
-
 .tabled{
     margin-top: 0%;
 }
@@ -1673,7 +1672,7 @@ path {
 .ant-table-wrapper .ant-table-tbody>tr>td,
 .ant-table-wrapper tfoot>tr>th,
 .ant-table-wrapper tfoot>tr>td {
-    padding: 16px 80px;
+    padding: 10px 80px;
 }
 .ant-card .ant-card-head {
     padding-left: 80px;

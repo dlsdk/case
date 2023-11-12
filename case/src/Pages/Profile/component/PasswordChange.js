@@ -11,7 +11,7 @@ const PasswordChange = ({ formFields, form}) => {
                         name={field.name}
                         rules={field.rules}
                     >
-                        <Input type={field.type || 'text'} />
+                        <Input.Password/>
                     </Form.Item>
                 ))}
             </Form>

@@ -7,26 +7,29 @@ const handleDeleteItem = (key) => {
     const newData = tableData.filter(item => item.key !== key);
     console.log("new data item deleted : ", newData);
 };
+
 export const columns = [
     {
         title: 'Title',
         dataIndex: 'title',
         key: 'title',
-
+        width:600,
+        ellipsis: true,
     },
     {
         title: 'Author',
         dataIndex: 'author',
         key: 'author',
+        width:300,
+        ellipsis: true,
     },
     {
         key: 'actions',
-        width: '3%',
         fixed: 'right',
         render: (data) => (
             <div>
-                <NavLink to={`/article/${data.author}`} state={{ data }}>
-                    <InfoCircleOutlined style={{ marginRight: 8 }} />
+                <NavLink to={`/article/${data.author}`} state={{ data }} style={{marginRight:'15px'}}>
+                    Detail
                 </NavLink>
                 <Button
                     type="danger"
@@ -37,6 +40,7 @@ export const columns = [
         ),
     },
 ];
+
 
 export const tableData = [
     {

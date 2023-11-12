@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Avatar, Button, Card, Col, Form, Image, Modal, Row } from 'antd';
 import { EditOutlined, UserOutlined } from '@ant-design/icons';
 import image from 'assets/images/user.png';
@@ -7,34 +6,15 @@ import ProfileDetail from './component/ProfileDetail';
 import ProfileForm from './component/ProfileForm';
 import PasswordChange from "./component/PasswordChange";
 import { formData, passwordChangeFormFields } from 'helpers';
-
-const initialData = {
-    fullName: 'Sarah Emily Jacob',
-    mobile: '(44) 123 1234 123',
-    email: 'sarahjacob@mail.com',
-    location: 'USA',
-    username: 'Dilşad',
-    password: '12343214132',
-};
-
 const Profile = () => {
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
     const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false);
-    const [form] = Form.useForm();
-    const [data, setData] = useState(initialData);
-
-    const handleEdit = () => {
-        setData({
-            fullName: '',
-            mobile: '(44) 123 1234 123',
-            email: 'sarahjacob@mail.com',
-            location: 'USA',
-            username: 'Dilşad',
-            password: '12343214132',
-        });
-        setIsEditModalVisible(true);
-    };
-
+    const  [passwordForm]= Form.useForm();
+    const  [profileForm]= Form.useForm();
+    const [data, setData] = useState(() => {
+        const storedUserData = localStorage.getItem('userData');
+        return storedUserData ? JSON.parse(storedUserData) : {};
+    });
     const getCardTitle = () => (
         <>
             <Avatar icon={<UserOutlined />} size={50} />
@@ -46,17 +26,17 @@ const Profile = () => {
 
     const handleSubmitPassword = async () => {
         try {
-            await form.validateFields();
+            await passwordForm.validateFields();
 
-            const newPassword = form.getFieldValue('newPassword');
-            const confirmPassword = form.getFieldValue('confirmPassword');
+            const newPassword = passwordForm.getFieldValue('newPassword');
+            const confirmPassword = passwordForm.getFieldValue('confirmPassword');
 
             if (newPassword === confirmPassword && newPassword && confirmPassword) {
                 Modal.success({
                     title: 'Password Match',
                     content: 'Your password changed',
                 });
-                form.resetFields();
+                passwordForm.resetFields();
                 setIsPasswordModalVisible(false);
             } else {
                 throw new Error('The two passwords do not match. Please try again.');
@@ -66,16 +46,36 @@ const Profile = () => {
                 title: 'Error',
                 content: error.message || 'An error occurred while changing the password.',
             });
-            form.resetFields();
+            passwordForm.resetFields();
             setIsPasswordModalVisible(false);
         }
     };
 
     const handleSave = () => {
-        const values = form.getFieldsValue();
-        console.log('Form values:', values);
-        setIsEditModalVisible(false);
-        form.resetFields();
+      /*  profileForm.validateFields().then(values => {
+            setData(prevData => ({
+                ...prevData,
+                ...values,
+            }));
+            localStorage.setItem('currentUser', JSON.stringify({
+                ...values,
+            }));
+            setIsEditModalVisible(false);
+        }).catch(errorInfo => {
+            console.error('Validation failed:', errorInfo);
+        });*/
+
+
+        profileForm.validateFields().then((values) => {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+
+        Object.keys(values).map(key => {
+            if (values[key] !== currentUser[key]) {
+                currentUser[key] = values[key];
+            }
+        });
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    });
     };
 
     return (
@@ -85,7 +85,7 @@ const Profile = () => {
                 title={getCardTitle()}
                 className="profile-card"
                 extra={
-                    <Button type="link" onClick={handleEdit}>
+                    <Button type="link" onClick={() => setIsEditModalVisible(true)}>
                         <EditOutlined />
                     </Button>
                 }
@@ -106,7 +106,7 @@ const Profile = () => {
                         >
                             <PasswordChange
                                 formFields={passwordChangeFormFields}
-                                form={form}
+                                form={passwordForm}
                             />
                         </Modal>
                     </Col>
@@ -122,7 +122,7 @@ const Profile = () => {
                 onCancel={() => setIsEditModalVisible(false)}
                 style={{ marginLeft: '35%' }}
             >
-                <ProfileForm form={form} formData={formData} />
+                <ProfileForm form={profileForm} formData={formData} />
             </Modal>
         </div>
     );

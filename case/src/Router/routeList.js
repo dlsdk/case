@@ -5,8 +5,9 @@ import HomeLayout from 'Pages/Home';
 import Home from "Pages/Home/Component/Home";
 import AuthLayout from "Pages/Auth";
 import Article from 'Pages/Article';
-import Profile from "../Pages/Profile";
+import Profile from 'Pages/Profile';
 import PrivateRoute from "./PrivateRoute";
+import Page404 from 'Pages/Page404';
 
 const routeList = [
     {
@@ -41,6 +42,10 @@ const routeList = [
                 element: <Register/>
             }
         ]
+    },
+    {
+    path: '*',
+    element: <Page404 />,
     },
 ]
 const authMap = routes => routes.map(route => {

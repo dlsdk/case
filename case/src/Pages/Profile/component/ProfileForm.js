@@ -5,7 +5,7 @@ function ProfileForm({form, formData}) {
     return (
         <Form form={form} layout="vertical" className="profile-form">
             {formData.map(item => (
-                <Form.Item key={item.key} name={item.key} label={item.label}>
+                <Form.Item key={item.key} name={item.name} label={item.label} rules={item.rules}>
                     <Input />
                 </Form.Item>
             ))}

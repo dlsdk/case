@@ -1,17 +1,17 @@
 export const profileItems = [
-    { label: 'Full Name', key: 'fullName' },
-    { label: 'Mobile', key: 'mobile' },
-    { label: 'Email', key: 'email' },
-    { label: 'Location', key: 'location' },
-    { label: 'Username', key: 'username' },
+    { name: 'fullName', label: 'Full Name', key: 'fullName' },
+    { name: 'mobile',label: 'Mobile', key: 'mobile' },
+    { name: 'email', label: 'Email', key: 'email' },
+    { name:'location', label: 'Location', key: 'location' },
+    { name: 'username', label: 'Username', key: 'username' },
 ];
 
 export const formData = [
-    { key: 'fullName', label: 'Full Name' },
-    { key: 'mobile', label: 'Mobile' },
-    { key: 'email', label: 'Email' },
-    { key: 'location', label: 'Location' },
-    { key: 'username', label: 'Username' }
+    { name: 'fullName', key: 'fullName', label: 'Full Name' },
+    { name: 'username', key: 'username', label: 'Username' },
+    { name: 'email', key: 'email', label: 'Email', rules: [{ type: 'email', message: 'Please enter a valid email' }] },
+    { name:'location', key: 'location', label: 'Location'},
+    { name: 'mobile', key: 'mobile', label: 'Mobile', rules: [{ pattern: /^\d{10}$/, message: 'Please enter a valid 10-digit mobile number' }] },
 ];
 
 export const passwordChangeFormFields = [
@@ -34,7 +34,6 @@ export const passwordChangeFormFields = [
                 },
             }),
         ],
-        type: 'password',
     },
 ];
 

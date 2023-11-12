@@ -14,16 +14,18 @@ const Login = () => {
       const response = await axios.post('http://localhost:8000/api/login/', values);
 
       if (response.status === 200) {
-        const { access, refresh } = response.data;
+        const { access, refresh , user} = response.data;
         localStorage.setItem('access_token', access);
         localStorage.setItem('refresh_token', refresh);
+        localStorage.setItem('currentUser', JSON.stringify(user));
         navigate('/');
       }
     } catch (error) {
       console.error('Error during login:', error);
+      const errorMessage = error | 'An error occurred during login. Please try again later.';
       Modal.error({
         title: 'Error',
-        content: 'An error occurred during login. Please try again later.',
+        content: errorMessage,
       });
     }
   };
@@ -43,7 +45,7 @@ const Login = () => {
               className="row-col"
             >
               <Form.Item
-                className="username"
+                className="email"
                 label="Email"
                 name="email"
                 rules={[
@@ -56,7 +58,7 @@ const Login = () => {
                 <Input placeholder="Email" />
               </Form.Item>
               <Form.Item
-                className="username"
+                className="password"
                 label="Password"
                 name="password"
                 rules={[
