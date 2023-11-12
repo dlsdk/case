@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import {Link, Navigate, NavLink, useNavigate} from 'react-router-dom';
+import { NavLink, useNavigate} from 'react-router-dom';
 import { Layout, Button, Col, Form, Input, Row, Switch, Typography, Modal } from 'antd';
 import login from 'assets/images/loginbg.png';
+import UserActions from 'Redux/Actions/UserActions';
+import { useDispatch } from "react-redux";
 
+const { getUpdateUserSuccess } = UserActions;
 const { Content } = Layout;
 const { Title } = Typography;
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleSubmit = async (values) => {
     try {
       const response = await axios.post('http://localhost:8000/api/login/', values);
@@ -18,6 +22,8 @@ const Login = () => {
         localStorage.setItem('access_token', access);
         localStorage.setItem('refresh_token', refresh);
         localStorage.setItem('currentUser', JSON.stringify(user));
+        console.log("ne oldu burda : ",response.data.user )
+        dispatch(getUpdateUserSuccess(user));
         navigate('/');
       }
     } catch (error) {

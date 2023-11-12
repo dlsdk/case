@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import { Row, Col, Card, Table } from "antd";
-import { columns, tableData } from "utils/TableData";
+import { columns } from "utils/TableData";
 import {useSelector} from "react-redux";
 import {selectArticle} from 'Redux/Selectors';
 

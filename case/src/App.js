@@ -1,9 +1,10 @@
 import React, {useEffect} from "react";
 import Loading from "./Components/Loading";
 import './App.css'
-import Actions from 'Redux/Actions'
 import {useDispatch} from "react-redux";
-const { getArticle } = Actions
+import ArticleActions from "./Redux/Actions/ArticleActions";
+
+const {getArticle} = ArticleActions
 
 
 
