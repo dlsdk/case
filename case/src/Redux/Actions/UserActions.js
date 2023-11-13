@@ -1,6 +1,6 @@
 import {USER_ERROR, USER_PENDING, USER_SUCCESS} from 'Redux/Actiontypes'
 import axios from "axios";
-import {putData} from 'helpers';
+import {putData} from 'Redux/services/getData';
 import {notification} from "antd";
 
 const userError = (error) => {

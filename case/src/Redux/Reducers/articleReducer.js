@@ -8,23 +8,28 @@ const initialState = {
 
 const articleReducer = (state= initialState,action) => {
 
-    switch(action.type)
-    {
+    switch(action.type) {
         case GET_ARTICLE_PENDING:
             return {
                 ...state,
-                isLoading:true,
+                isLoading: true,
             }
         case GET_ARTICLE_SUCCESS:
             return {
                 ...state,
                 articles: action.data,
-                isLoading:false,
+                isLoading: false,
             };
         case UPDATE_ARTICLE:
+            const updatedArticles = state.articles.map(article => {
+                if (article.id === action.data.id) {
+                    return { ...article, ...action.data };
+                }
+                return article;
+            });
             return {
                 ...state,
-                articles: [...state.articles, action.data],
+                articles: updatedArticles,
             };
         case GET_ARTICLE_ERROR:
             return {

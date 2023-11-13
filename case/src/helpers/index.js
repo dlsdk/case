@@ -1,4 +1,3 @@
-import axios from "axios";
 
 export const profileItems = [
     { name: 'fullName', label: 'Full Name', key: 'fullName' },
@@ -43,11 +42,4 @@ export const getLocalStorageItem = (key) => {
     return JSON.parse(localStorage.getItem(key));
 }
 
-export const putData = (url,data) => {
-    return axios.put(url,data)
-    .then(response => response.data)
-    .catch(error => {
-        throw error;
-    });
-}
 

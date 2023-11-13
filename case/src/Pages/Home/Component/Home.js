@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { Row, Col, Card, Table } from "antd";
 import { columns } from "utils/TableData";
 import {useSelector} from "react-redux";

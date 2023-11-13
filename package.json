@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "nanoid": "^5.0.3",
+    "uuid": "^9.0.1"
+  }
+}

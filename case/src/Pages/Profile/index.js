@@ -80,23 +80,20 @@ const Profile = () => {
   };
 
   const handleSave = () => {
-    profileForm
-      .validateFields()
-      .then((values) => {
-        const updatedUser = { ...data };
-        Object.keys(updatedUser).forEach((key) => {
+    profileForm.validateFields().then((values) => {
+        Object.keys(data).forEach((key) => {
           if (
             values.hasOwnProperty(key) &&
-            updatedUser[key] !== values[key] &&
+            data[key] !== values[key] &&
             values[key]
           ) {
-            updatedUser[key] = values[key];
+            data[key] = values[key];
           }
         });
 
-        localStorage.setItem(currentUserKey, JSON.stringify(updatedUser));
-        dispatch(updateUser(updatedUser));
-        setData(updatedUser);
+        localStorage.setItem(currentUserKey, JSON.stringify(data));
+        dispatch(updateUser(data));
+        setData(data);
         profileForm.resetFields();
         setIsEditModalVisible(false);
       })

@@ -19,3 +19,12 @@ export const registerUser = async (formData) => {
         console.error('Error during registration:', error);
     }
 };
+
+
+export const putData = (url,data) => {
+    return axios.put(url,data)
+    .then(response => response.data)
+    .catch(error => {
+        throw error;
+    });
+}
