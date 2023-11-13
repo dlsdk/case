@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  django:
+    build:
+      context: ./Backend/caseBackend
+      dockerfile: Dockerfile
+    command: gunicorn caseBackend.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./Backend/caseBackend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - react
+
+  react:
+    build:
+      context: ./case
+      dockerfile: Dockerfile
+    command: npm start
+    volumes:
+      - ./case:/app
+    ports:
+      - "3000:3000"
