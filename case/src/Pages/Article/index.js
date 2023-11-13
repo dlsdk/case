@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import { useLocation } from 'react-router-dom';
 import { Button, Input, Modal, Form, Row, Col, Card, Typography, Image } from 'antd';
 import ArticleActions from 'Redux/Actions/ArticleActions';
@@ -16,14 +16,14 @@ function Article() {
 
   const handleSave = async () => {
     try {
-      await form.validateFields(); // This will validate the form
+      await form.validateFields();
       const values = form.getFieldsValue();
       Object.keys(data).forEach((key) => {
         if (values.hasOwnProperty(key) && data[key] !== values[key] && values[key]) {
           data[key] = values[key];
         }
       });
-
+      setData(data);
       dispatch(updateArticle(data));
       setIsEditModalVisible(false);
     } catch (error) {

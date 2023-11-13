@@ -3,7 +3,6 @@ import {Descriptions} from "antd";
 import {profileItems} from 'helpers';
 
 function ProfileDetail({title, data}) {
-console.log("DATA : ", data);
     return (
         <Descriptions title={title}>
             {profileItems.map(item => (

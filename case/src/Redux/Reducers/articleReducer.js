@@ -40,7 +40,6 @@ const articleReducer = (state = initialState, action) => {
       const filteredArticles = state.articles.filter(
         (article) => article.id !== action.data.id
       );
-      console.log("Filterde ", filteredArticles);
       return {
         ...state,
         articles: filteredArticles,

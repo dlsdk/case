@@ -26,7 +26,6 @@ const Login = () => {
         navigate('/');
       }
     } catch (error) {
-      console.error('Error during login:', error);
       const errorMessage = error | 'An error occurred during login. Please try again later.';
       Modal.error({
         title: 'Error',

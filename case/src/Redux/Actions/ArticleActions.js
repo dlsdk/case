@@ -40,7 +40,6 @@ const getArticleSuccess = (data) => {
 
 const getArticle = () => dispatch => {
     dispatch(getArticlePending());
-    console.log('Dispatching getArticlePending');
     httpGetRequest('https://newsapi.org/v2/everything', paramsArticle)
         .then(data => {
             const dataWithIDs = data.map(item => ({ id: nanoid(), ...item }));

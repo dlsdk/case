@@ -50,7 +50,6 @@ const updateUser = (userData) => dispatch => {
 
 const getUser = (email) => dispatch => {
     dispatch(getUserPending());
-    console.log('Dispatching getArticlePending');
     axios.get(`http://localhost:8000/api/profile/?email=${email}`)
         .then(data => {
             dispatch(userSuccess(data));

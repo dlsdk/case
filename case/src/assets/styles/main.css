@@ -27,7 +27,23 @@ body {
     background-repeat: no-repeat;
     background-position: center;
 }
+.loading{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+}
 
+.loading .icon {
+    color: black;
+    margin-left: 3rem;
+    font-size: 2rem;
+}
+
+.loading .title{
+    color: black;
+}
 .profile-layout .profile-card{
     width:600px;
     height:fit-content;

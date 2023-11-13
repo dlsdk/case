@@ -20,7 +20,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: 'auto', marginTop: '50px' }}>
+    <div style={{ maxWidth: '400px', margin: 'auto', marginTop: '15%' }}>
       <h2>Forgot Password</h2>
       <Form onFinish={onFinish}>
         <Form.Item
