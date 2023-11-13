@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { NavLink, useNavigate} from 'react-router-dom';
-import { Layout, Button, Col, Form, Input, Row, Switch, Typography, Modal } from 'antd';
+import { Layout, Button, Col, Form, Input, Row, Typography, Modal } from 'antd';
 import login from 'assets/images/loginbg.png';
 import UserActions from 'Redux/Actions/UserActions';
 import { useDispatch } from "react-redux";
@@ -26,10 +26,9 @@ const Login = () => {
         navigate('/');
       }
     } catch (error) {
-      const errorMessage = error | 'An error occurred during login. Please try again later.';
       Modal.error({
         title: 'Error',
-        content: errorMessage,
+        content: 'An error occurred during login. Please try again later.',
       });
     }
   };

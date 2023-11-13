@@ -1,4 +1,4 @@
-from django.urls import path
+"""from django.urls import path
 from .views import CustomUserRegisterView, LoginView, ChangePasswordView, UserProfileView, ForgotPasswordView
 
 urlpatterns = [
@@ -8,3 +8,4 @@ urlpatterns = [
     path('profile/', UserProfileView.as_view(), name='profile'),
     path('forgot-password/', ForgotPasswordView.as_view(), name='forgot-password')
 ]
+"""

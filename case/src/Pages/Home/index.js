@@ -3,8 +3,7 @@ import {NavLink, Outlet} from "react-router-dom";
 import {Button, Layout, Menu, theme} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {
-    AppstoreOutlined, DashboardOutlined,
-    HomeOutlined,
+    DashboardOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined, UserOutlined,
 } from "@ant-design/icons";

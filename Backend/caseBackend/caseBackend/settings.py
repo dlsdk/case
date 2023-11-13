@@ -71,8 +71,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'dilsad.kpc@gmail.com'  # Google hesabınızın e-posta adresi
-EMAIL_HOST_PASSWORD = 'ahsb eznx axph fnrp'  # App Password (Uygulama Şifresi)
+EMAIL_HOST_USER = 'dilsad.kpc@gmail.com'
+EMAIL_HOST_PASSWORD = 'ahsb eznx axph fnrp'
 
 
 REST_FRAMEWORK = {

@@ -27,7 +27,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: 'auto', paddingTop: '50px' }}>
+    <div style={{ maxWidth: '400px', margin: 'auto', paddingTop: '15%' }}>
       <h1>Reset Password</h1>
       <Form form={form} name="reset-password-form" onFinish={onFinish}>
         <Form.Item

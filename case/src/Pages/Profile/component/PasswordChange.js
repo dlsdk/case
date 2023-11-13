@@ -16,9 +16,6 @@ const PasswordChange = ({ formFields, form}) => {
                     </Form.Item>
                 ))}
             </Form>
-
-
-
     );
 };
 

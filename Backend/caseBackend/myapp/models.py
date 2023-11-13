@@ -32,7 +32,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['fullName']
 
-    # Add related_name to avoid clashes with auth.User
     groups = models.ManyToManyField('auth.Group', related_name='customuser_set', blank=True)
     user_permissions = models.ManyToManyField('auth.Permission', related_name='customuser_set', blank=True)
 
@@ -40,7 +39,4 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def email_user(self, subject, message, from_email=None, **kwargs):
-        """
-        Sends an email to this user.
-        """
         send_mail(subject, message, from_email, [self.email], **kwargs)

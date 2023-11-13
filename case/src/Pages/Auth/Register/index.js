@@ -1,12 +1,14 @@
 import React from 'react';
 import { Form, Input, Button, Row, Col, Typography, Modal } from 'antd';
-import { registerUser } from '../../../Redux/services/getData';
-import { Link, NavLink } from 'react-router-dom';
-import register from "../../../assets/images/bg.png";
+import { registerUser } from 'Redux/services/getData';
+import { NavLink } from 'react-router-dom';
+import register from "assets/images/bg.png";
+import {useNavigate} from "react-router-dom";
 
 const { Title } = Typography;
 
 const Register = () => {
+  const navigate = useNavigate();
   const onFinish = async (values) => {
     const { confirmPassword, ...formData } = values;
 
@@ -25,6 +27,7 @@ const Register = () => {
         title: 'Register Success',
         content: 'You have successfully registered!',
       });
+      navigate('/auth/login')
     } else {
       Modal.error({
         title: 'Registration Failed',
@@ -38,7 +41,7 @@ const Register = () => {
          <Col xs={24} md={12} lg={10} xl={8} className="mb-24" style={{marginLeft: '5%'}}>
             <img src={register} alt="" style={{ width: '100%'}}  />
           </Col>
-      <Col xs={24} md={12} lg={10} xl={8} className="mb-24"style={{marginRight: '8%'}}>
+      <Col xs={24} md={12} lg={10} xl={8} className="mb-24" style={{marginRight: '8%'}}>
         <Title className="mb-15">REGISTER</Title>
         <Form onFinish={onFinish} layout="vertical" className="row-col">
           <Form.Item

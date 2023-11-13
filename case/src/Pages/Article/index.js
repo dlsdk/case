@@ -62,10 +62,6 @@ function Article() {
                     hasFeedback
                     rules={[
                       {
-                        required: true,
-                        message: 'Please enter content!',
-                      },
-                      {
                         min: 250,
                         message: 'Content must be at least 250 characters!',
                       },

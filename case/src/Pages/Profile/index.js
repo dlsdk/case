@@ -23,9 +23,6 @@ import ProfileForm from './component/ProfileForm';
 import PasswordChange from './component/PasswordChange';
 import image from 'assets/images/user.png';
 
-const currentUserKey = 'currentUser';
-const errorTitle = 'Error';
-
 const { updateUser, getUser, changePassword } = UserActions;
 
 const getCardTitle = () => (
@@ -46,7 +43,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (!currentUser) {
-      dispatch(getUser(getLocalStorageItem(currentUserKey)?.email));
+      dispatch(getUser(getLocalStorageItem('currentUser')?.email));
     } else {
       setData(currentUser);
     }
@@ -59,7 +56,7 @@ const Profile = () => {
 
       if (newPassword) {
         await changePassword({
-          email: getLocalStorageItem(currentUserKey)?.email,
+          email: getLocalStorageItem('currentUser')?.email,
           new_password: newPassword
         });
         passwordForm.resetFields();
@@ -72,7 +69,7 @@ const Profile = () => {
         ? error.errorFields.map((field) => field.errors.join(', ')).join(' ')
         : error.error || 'An error occurred while changing the password.';
       Modal.error({
-        title: errorTitle,
+        title: 'Error',
         content: errorMessage
       });
       passwordForm.resetFields();
@@ -91,7 +88,7 @@ const Profile = () => {
           }
         });
 
-        localStorage.setItem(currentUserKey, JSON.stringify(data));
+        localStorage.setItem('currentUser', JSON.stringify(data));
         dispatch(updateUser(data));
         setData(data);
         profileForm.resetFields();
@@ -102,7 +99,7 @@ const Profile = () => {
           ? error.errorFields.map((field) => field.errors.join(', ')).join(' ')
           : error.error || 'Validation Error!';
         Modal.error({
-          title: errorTitle,
+          title: 'Error',
           content: errorMessage
         });
       });

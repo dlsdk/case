@@ -9,6 +9,7 @@ from rest_framework import status
 from django.contrib.auth.hashers import check_password, make_password
 from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
 from urllib.parse import quote
+
 class UserProfileView(APIView):
 
     def get(self, request):
@@ -132,11 +133,9 @@ class ForgotPasswordView(APIView):
         except CustomUser.DoesNotExist:
             return Response({'message': 'User with this email does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 
-        # Generate a password reset key
         confirmation = EmailConfirmationHMAC(user)
         key = confirmation.key
 
-        # Encode the email and include it in the password reset link
         encoded_email = quote(email)
         reset_url = f"http://localhost:3000/auth/reset-password/{key}?email={encoded_email}"
 
