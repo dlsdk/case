@@ -6,7 +6,7 @@ import login from 'assets/images/loginbg.png';
 import UserActions from 'Redux/Actions/UserActions';
 import { useDispatch } from "react-redux";
 
-const { getUpdateUserSuccess } = UserActions;
+const { userSuccess } = UserActions;
 const { Content } = Layout;
 const { Title } = Typography;
 
@@ -22,8 +22,7 @@ const Login = () => {
         localStorage.setItem('access_token', access);
         localStorage.setItem('refresh_token', refresh);
         localStorage.setItem('currentUser', JSON.stringify(user));
-        console.log("ne oldu burda : ",response.data.user )
-        dispatch(getUpdateUserSuccess(user));
+        dispatch(userSuccess(user));
         navigate('/');
       }
     } catch (error) {
@@ -89,6 +88,12 @@ const Login = () => {
                 Don't have an account?{' '}
                 <NavLink to="/auth/register" className="text-dark font-bold">
                   Register
+                </NavLink>
+              </p>
+              <p className="font-semibold text-muted">
+                 Forgot your password?{' '}
+                  <NavLink to="/auth/forgot-password" className="text-dark font-bold">
+                  Reset it here
                 </NavLink>
               </p>
             </Form>

@@ -1,6 +1,7 @@
-import {USER_ERROR, GET_USER_PENDING, GET_UPDATE_USER_SUCCESS} from 'Redux/Actiontypes'
+import {USER_ERROR, USER_PENDING, USER_SUCCESS} from 'Redux/Actiontypes'
 import axios from "axios";
-import {getLocalStorageItem} from 'helpers';
+import {putData} from 'helpers';
+import {notification} from "antd";
 
 const userError = (error) => {
     return {
@@ -11,25 +12,39 @@ const userError = (error) => {
 
 const getUserPending= () => {
     return {
-        type: GET_USER_PENDING,
+        type: USER_PENDING,
     }
 }
 
-const getUpdateUserSuccess = (data) => {
+const userSuccess = (data) => {
     return {
-        type: GET_UPDATE_USER_SUCCESS,
+        type: USER_SUCCESS,
         data
     }
 }
 
-
-const updateUser = (userData) => dispatch => {
-    axios.put('http://localhost:8000/api/profile/', userData)
-      .then((response) => {
-        dispatch(getUpdateUserSuccess(response.data));
+const changePassword = (password) => {
+    putData('http://localhost:8000/api/change-password/', password).then((response) => {
+        notification.success({
+        message: 'Password Changed Successful',
+        description: 'Your password has been successfully changed.',
+      });
       })
       .catch((error) => {
-           dispatch(userError(error));
+          notification.error({
+        message: 'Password Changed Failed',
+        description: 'An error occurred while changing the password.',
+      });
+      });
+}
+
+
+const updateUser = (userData) => dispatch => {
+    putData('http://localhost:8000/api/profile/', userData).then((response) => {
+        console.log("RESPONSE : ", response.data)
+      })
+      .catch((error) => {
+          console.log("ERROR : ", error)
       });
 };
 
@@ -38,12 +53,12 @@ const getUser = (email) => dispatch => {
     console.log('Dispatching getArticlePending');
     axios.get(`http://localhost:8000/api/profile/?email=${email}`)
         .then(data => {
-            dispatch(getUpdateUserSuccess(data));
+            dispatch(userSuccess(data));
         })
         .catch(error => {
             dispatch(userError(error));
         });
 }
 
-const UserActions = {getUser, updateUser, getUpdateUserSuccess};
+const UserActions = {getUser, updateUser, userSuccess, changePassword};
 export default UserActions;

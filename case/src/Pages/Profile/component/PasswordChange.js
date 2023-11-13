@@ -10,6 +10,7 @@ const PasswordChange = ({ formFields, form}) => {
                         label={field.label}
                         name={field.name}
                         rules={field.rules}
+                        hasFeedback
                     >
                         <Input.Password/>
                     </Form.Item>

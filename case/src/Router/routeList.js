@@ -8,6 +8,8 @@ import Article from 'Pages/Article';
 import Profile from 'Pages/Profile';
 import PrivateRoute from "./PrivateRoute";
 import Page404 from 'Pages/Page404';
+import ForgotPassword from 'Pages/Auth/ForgotPassword';
+import ResetPassword from 'Pages/Auth/ResetPassword';
 
 const routeList = [
     {
@@ -40,6 +42,14 @@ const routeList = [
             {
                 path:'register',
                 element: <Register/>
+            },
+            {
+                path:'forgot-password',
+                element: <ForgotPassword/>
+            },
+            {
+                path:'reset-password/:key',
+                element: <ResetPassword/>
             }
         ]
     },

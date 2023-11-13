@@ -6,11 +6,10 @@ from .models import CustomUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
+from django.contrib.auth.hashers import check_password, make_password
+from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
+from urllib.parse import quote
 class UserProfileView(APIView):
-
-    # Remove the IsAuthenticated permission class to allow unauthenticated access
-    # permission_classes = [IsAuthenticated]
 
     def get(self, request):
         email = request.query_params.get('email', None)
@@ -28,32 +27,18 @@ class UserProfileView(APIView):
 
     def put(self, request):
         user_id_to_update = request.data.get('id', None)
-
-        # Eğer güncellenmek istenen kullanıcı ID'si boş ise hata döndür
         if not user_id_to_update:
             return Response({'id': ['Kullanıcı ID boş olamaz.']}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Güncellenmek istenen kullanıcıyı bul
         try:
             user_to_update = CustomUser.objects.get(id=user_id_to_update)
         except CustomUser.DoesNotExist:
             return Response({'id': ['Bu ID\'ye sahip kullanıcı bulunamadı.']}, status=status.HTTP_404_NOT_FOUND)
-
-        # Güncelleme işlemini gerçekleştir
         serializer = UserProfileSerializer(user_to_update, data=request.data)
 
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def post(self, request):
-        serializer = UserProfileSerializer(data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -77,18 +62,25 @@ class LoginView(generics.CreateAPIView):
             print('User does not exist:', email)
             return Response({'error': 'Invalid credentials'}, status=401)
 
-        if user.password == password:
+        print("password: ", password, "user.password: ", user.password)
+        print(check_password(password, user.password))
+
+        if check_password(password, user.password):
             refresh = RefreshToken.for_user(user)
+
+            print('Refresh Token:', refresh)
 
             user_serializer = CustomUserSerializer(user)
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
-                 'user': user_serializer.data,
+                'user': user_serializer.data,
             })
         else:
             print('Invalid password for user:', email)
             return Response({'error': 'Invalid credentials'}, status=401)
+
+
 
 class CustomUserRegisterView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
@@ -96,6 +88,8 @@ class CustomUserRegisterView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def create(self, request, *args, **kwargs):
+        request.data['password'] = make_password(request.data['password'])
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -109,22 +103,47 @@ class CustomUserRegisterView(generics.CreateAPIView):
 
 class ChangePasswordView(APIView):
     def put(self, request):
-        user_id_to_update = request.data.get('id', None)
+        email_to_update = request.data.get('email', None)
         new_password = request.data.get('new_password', None)
 
-        # Eğer güncellenmek istenen kullanıcı ID'si veya yeni şifre boş ise hata döndür
-        if not user_id_to_update or not new_password:
-            return Response({'message': 'Lütfen tüm alanları doldurun.'}, status=status.HTTP_400_BAD_REQUEST)
+        if not email_to_update or not new_password:
+            return Response({'message': 'Please fill in all fields.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Güncellenmek istenen kullanıcıyı bul
         try:
-            user_to_update = CustomUser.objects.get(id=user_id_to_update)
+            user_to_update = CustomUser.objects.get(email=email_to_update)
         except CustomUser.DoesNotExist:
-            return Response({'message': 'Bu ID\'ye sahip kullanıcı bulunamadı.'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'message': 'User with this email not found.'}, status=status.HTTP_404_NOT_FOUND)
 
-        # Yeni şifreyi ayarla ve kaydet
-        user_to_update.password = new_password
+        user_to_update.set_password(new_password)
         user_to_update.save()
 
-        return Response({'message': 'Şifre başarıyla değiştirildi.'}, status=status.HTTP_200_OK)
+        return Response({'message': 'Password successfully changed.'}, status=status.HTTP_200_OK)
+
+
+class ForgotPasswordView(APIView):
+    def post(self, request):
+        email = request.data.get('email', None)
+
+        if not email:
+            return Response({'message': 'Please provide an email address.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            return Response({'message': 'User with this email does not exist.'}, status=status.HTTP_404_NOT_FOUND)
+
+        # Generate a password reset key
+        confirmation = EmailConfirmationHMAC(user)
+        key = confirmation.key
+
+        # Encode the email and include it in the password reset link
+        encoded_email = quote(email)
+        reset_url = f"http://localhost:3000/auth/reset-password/{key}?email={encoded_email}"
+
+        subject = "Reset your password"
+        message = f"Click the following link to reset your password: {reset_url}"
+
+        user.email_user(subject, message)
+
+        return Response({'message': 'Password reset email sent successfully.'}, status=status.HTTP_200_OK)
 

@@ -17,7 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from myapp.views import CustomUserRegisterView, LoginView, UserProfileView, ChangePasswordView
+from myapp.views import CustomUserRegisterView, LoginView, UserProfileView, ChangePasswordView, ForgotPasswordView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +27,7 @@ urlpatterns = [
     path('api/register/', CustomUserRegisterView.as_view(), name='register'),
     path('api/login/', LoginView.as_view(), name='login'),
     path('api/profile/', UserProfileView.as_view(), name='profile'),
-    path('api/change-password/', ChangePasswordView.as_view(), name='change-password')
+    path('api/change-password/', ChangePasswordView.as_view(), name='change-password'),
+    path('api/forgot-password/', ForgotPasswordView.as_view(), name='forgot-password'),
 
 ]
