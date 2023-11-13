@@ -1,4 +1,10 @@
-import {GET_ARTICLE_PENDING, GET_ARTICLE_SUCCESS, GET_ARTICLE_ERROR, UPDATE_ARTICLE} from 'Redux/Actiontypes'
+import {
+    GET_ARTICLE_PENDING,
+    GET_ARTICLE_SUCCESS,
+    GET_ARTICLE_ERROR,
+    UPDATE_ARTICLE,
+    DELETE_ARTICLE
+} from 'Redux/Actiontypes'
 import {httpGetRequest} from 'Redux/services/getData'
 import { nanoid } from 'nanoid';
 
@@ -45,13 +51,19 @@ const getArticle = () => dispatch => {
         });
 }
 
+const deleteArticle = (data) => {
+    return {
+        type: DELETE_ARTICLE,
+        data
+    }
+}
+
 const updateArticle = (data) => {
-    console.log("UPDATEARTICLE NE :", data);
     return {
         type: UPDATE_ARTICLE,
         data
     }
 }
 
-const ArticleActions = {getArticle, updateArticle};
+const ArticleActions = {getArticle, updateArticle, deleteArticle};
 export default ArticleActions;
